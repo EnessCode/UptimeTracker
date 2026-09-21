@@ -6,8 +6,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
-
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowReactApp", policy =>
+	{
+		policy.WithOrigins("http://localhost:5173")
+			  .AllowAnyHeader()
+			  .AllowAnyMethod();
+	});
+});
 
 builder.Services.AddOpenApi();
 
@@ -20,6 +29,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactApp");
 
 app.MapControllers();
 
