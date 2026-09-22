@@ -7,12 +7,9 @@ using UptimeTracker.Domain.Entities;
 
 namespace UptimeTracker.Application.Interfaces.Repositories
 {
-	public interface IEndpointRepository
+	public interface IPingHistoryRepository
 	{
-		Task AddAsync(Endpoint endpoint);
+		Task AddAsync(PingHistory history);
 		Task<int> SaveChangesAsync();
-		Task<IEnumerable<Endpoint>> GetAllAsync();
-		void Update(Endpoint endpoint);
-		Task<Endpoint> GetByIdAsync(Guid id);
 	}
 }

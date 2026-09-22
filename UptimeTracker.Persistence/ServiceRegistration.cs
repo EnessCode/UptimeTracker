@@ -20,6 +20,8 @@ namespace UptimeTracker.Persistence
 				options.UseNpgsql(configuration.GetConnectionString("PostgreSQL")));
 
 			services.AddScoped<IEndpointRepository, EndpointRepository>();
+
+			services.AddScoped<IPingHistoryRepository, PingHistoryRepository>();
 		}
 	}
 }

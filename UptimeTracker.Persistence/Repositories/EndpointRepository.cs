@@ -33,5 +33,15 @@ namespace UptimeTracker.Persistence.Repositories
 		{
 			return await _context.Endpoints.AsNoTracking().ToListAsync();
 		}
+
+		public void Update(Endpoint endpoint)
+		{
+			_context.Endpoints.Update(endpoint);
+		}
+
+		public async Task<Endpoint> GetByIdAsync(Guid id)
+		{
+			return await _context.Endpoints.FindAsync(id);
+		}
 	}
 }

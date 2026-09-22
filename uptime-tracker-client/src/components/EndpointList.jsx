@@ -18,7 +18,7 @@ const EndpointList = ({ refreshTrigger }) => {
         };
 
         fetchEndpoints();
-    }, []);
+    }, [refreshTrigger]);
 
     if (loading) {
         return <div className="text-center mt-4">Veriler yükleniyor...</div>;
