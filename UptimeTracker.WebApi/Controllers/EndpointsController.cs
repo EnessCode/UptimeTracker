@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UptimeTracker.Application.Features.Endpoints.Commands.CreateEndpoint;
 using UptimeTracker.Application.Features.Endpoints.Commands.DeleteEndpoint;
+using UptimeTracker.Application.Features.Endpoints.Commands.ToggleEndpointActive;
 using UptimeTracker.Application.Features.Endpoints.Queries.GetAllEndpoints;
 
 namespace UptimeTracker.WebApi.Controllers
@@ -42,6 +43,13 @@ namespace UptimeTracker.WebApi.Controllers
 		{
 			await _mediator.Send(new DeleteEndpointCommand { Id = id });
 			return NoContent(); 
+		}
+
+		[HttpPatch("{id}/toggle")]
+		public async Task<IActionResult> ToggleActive(Guid id)
+		{
+			await _mediator.Send(new ToggleEndpointActiveCommand { Id = id });
+			return NoContent();
 		}
 	}
 }

@@ -20,12 +20,10 @@ const EndpointList = ({ refreshTrigger }) => {
         fetchEndpoints();
     }, [refreshTrigger]);
 
-    // YENİ EKLENEN KISIM: Silme işlemini tetikleyen fonksiyon
     const handleDelete = async (id) => {
         if (window.confirm("Bu servisi silmek istediğinize emin misiniz?")) {
             try {
                 await endpointService.deleteEndpoint(id);
-                // İşlem başarılı olursa tabloyu yenilemek için sayfayı yeniden yüklüyoruz
                 window.location.reload();
             } catch (error) {
                 alert("Silme işlemi başarısız oldu.");
@@ -33,7 +31,6 @@ const EndpointList = ({ refreshTrigger }) => {
             }
         }
     };
-    // YENİ EKLENEN KISIM BİTİŞ
 
     if (loading) {
         return <div className="text-center mt-4">Veriler yükleniyor...</div>;
@@ -52,19 +49,15 @@ const EndpointList = ({ refreshTrigger }) => {
                             <th>URL</th>
                             <th>Kontrol Aralığı</th>
                             <th>Durum</th>
-                            {/* YENİ EKLENEN KISIM: Tablo başlığı */}
                             <th>İşlemler</th>
-                            {/* YENİ EKLENEN KISIM BİTİŞ */}
                         </tr>
                     </thead>
                     <tbody>
                         {endpoints.length === 0 ? (
                             <tr>
-                                {/* YENİ EKLENEN KISIM: Yeni sütun eklendiği için colSpan="4" değeri "5" yapıldı */}
                                 <td colSpan="5" className="text-center py-3 text-muted">
                                     Henüz sistemde kayıtlı bir servis bulunmuyor.
                                 </td>
-                                {/* YENİ EKLENEN KISIM BİTİŞ */}
                             </tr>
                         ) : (
                             endpoints.map((endpoint) => (
@@ -84,8 +77,22 @@ const EndpointList = ({ refreshTrigger }) => {
                                             {endpoint.status}
                                         </span>
                                     </td>
-                                    {/* YENİ EKLENEN KISIM: Silme butonu hücresi */}
                                     <td>
+                                        <button
+                                            className={`btn btn-sm me-2 ${endpoint.isActive ? 'btn-outline-warning' : 'btn-outline-success'}`}
+                                            onClick={async () => {
+                                                try {
+                                                    await endpointService.toggleActive(endpoint.id);
+
+                                                } catch (error) {
+                                                    alert("Durum değiştirilirken bir hata oluştu.");
+                                                    console.error(error);
+                                                }
+                                            }}
+                                        >
+                                            {endpoint.isActive ? 'Duraklat' : 'Başlat'}
+                                        </button>
+
                                         <button
                                             className="btn btn-sm btn-outline-danger"
                                             onClick={() => handleDelete(endpoint.id)}
@@ -93,7 +100,6 @@ const EndpointList = ({ refreshTrigger }) => {
                                             Sil
                                         </button>
                                     </td>
-                                    {/* YENİ EKLENEN KISIM BİTİŞ */}
                                 </tr>
                             ))
                         )}

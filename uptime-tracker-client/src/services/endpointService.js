@@ -14,5 +14,10 @@ export const endpointService = {
     deleteEndpoint: async (id) => {
         const response = await api.delete(`/endpoints/${id}`);
         return response.data;
+    },
+
+    toggleActive: async (id) => {
+        const response = await api.patch(`/endpoints/${id}/toggle`);
+        return response.data;
     }
 };
