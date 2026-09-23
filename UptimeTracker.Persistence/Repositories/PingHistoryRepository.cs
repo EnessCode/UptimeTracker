@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,15 @@ namespace UptimeTracker.Persistence.Repositories
 		public async Task<int> SaveChangesAsync()
 		{
 			return await _context.SaveChangesAsync();
+		}
+
+		public async Task<List<PingHistory>> GetByEndpointIdAsync(Guid endpointId)
+		{
+			return await _context.PingHistories
+				.Where(p => p.EndpointId == endpointId)
+				.OrderByDescending(p => p.CheckedAt)
+				.Take(50)
+				.ToListAsync();
 		}
 	}
 }

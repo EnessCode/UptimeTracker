@@ -11,5 +11,6 @@ namespace UptimeTracker.Application.Interfaces.Repositories
 	{
 		Task AddAsync(PingHistory history);
 		Task<int> SaveChangesAsync();
+		Task<List<PingHistory>> GetByEndpointIdAsync(Guid endpointId);
 	}
 }

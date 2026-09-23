@@ -19,5 +19,10 @@ export const endpointService = {
     toggleActive: async (id) => {
         const response = await api.patch(`/endpoints/${id}/toggle`);
         return response.data;
+    },
+
+    getEndpointHistory: async (id) => {
+        const response = await api.get(`/endpoints/${id}/history`);
+        return response.data;
     }
 };

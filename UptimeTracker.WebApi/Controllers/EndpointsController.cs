@@ -5,6 +5,7 @@ using UptimeTracker.Application.Features.Endpoints.Commands.CreateEndpoint;
 using UptimeTracker.Application.Features.Endpoints.Commands.DeleteEndpoint;
 using UptimeTracker.Application.Features.Endpoints.Commands.ToggleEndpointActive;
 using UptimeTracker.Application.Features.Endpoints.Queries.GetAllEndpoints;
+using UptimeTracker.Application.Features.PingHistory.Queries.GetPingHistoryByEndpointId;
 
 namespace UptimeTracker.WebApi.Controllers
 {
@@ -50,6 +51,14 @@ namespace UptimeTracker.WebApi.Controllers
 		{
 			await _mediator.Send(new ToggleEndpointActiveCommand { Id = id });
 			return NoContent();
+		}
+
+		[HttpGet("{id}/history")]
+		public async Task<IActionResult> GetHistory(Guid id)
+		{
+			var query = new GetPingHistoryByEndpointIdQuery { EndpointId = id };
+			var result = await _mediator.Send(query);
+			return Ok(result);
 		}
 	}
 }
