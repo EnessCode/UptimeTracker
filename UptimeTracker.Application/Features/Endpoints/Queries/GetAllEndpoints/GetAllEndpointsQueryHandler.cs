@@ -29,7 +29,8 @@ namespace UptimeTracker.Application.Features.Endpoints.Queries.GetAllEndpoints
 				Url = e.Url,
 				CheckIntervalInMinutes = e.CheckIntervalInMinutes,
 				Status = e.Status.ToString(), 
-				IsActive = e.IsActive
+				IsActive = e.IsActive,
+				LastCheckedAt = e.LastCheckedAt
 			});
 
 			return dtos;

@@ -17,6 +17,8 @@ namespace UptimeTracker.Domain.Entities
 		public bool IsActive { get; set; } = true; 
 		public EndpointStatus Status { get; set; } = EndpointStatus.Pending;
 
+		public DateTime? LastCheckedAt { get; set; }
+
 		public ICollection<PingHistory> PingHistories { get; set; } = new List<PingHistory>();
 	}
 }

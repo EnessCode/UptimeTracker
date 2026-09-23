@@ -25,6 +25,14 @@ namespace UptimeTracker.WebApi.BackgroundJobs
 
 			foreach (var endpoint in activeEndpoints)
 			{
+				var now = DateTime.UtcNow;
+
+				if (endpoint.LastCheckedAt.HasValue &&
+					endpoint.LastCheckedAt.Value.AddMinutes(endpoint.CheckIntervalInMinutes) > now)
+				{
+					continue;
+				}
+
 				var stopwatch = Stopwatch.StartNew();
 				bool isSuccess = false;
 				int statusCode = 0;
@@ -38,7 +46,7 @@ namespace UptimeTracker.WebApi.BackgroundJobs
 				catch (Exception)
 				{
 					isSuccess = false;
-					statusCode = 500; 
+					statusCode = 500;
 				}
 				finally
 				{
@@ -52,6 +60,14 @@ namespace UptimeTracker.WebApi.BackgroundJobs
 						ResponseTimeInMs = ms,
 						StatusCode = statusCode
 					});
+
+					var trackedEndpoint = await _repository.GetByIdAsync(endpoint.Id);
+					if (trackedEndpoint != null)
+					{
+						trackedEndpoint.LastCheckedAt = DateTime.UtcNow;
+						_repository.Update(trackedEndpoint);
+						await _repository.SaveChangesAsync();
+					}
 				}
 			}
 		}

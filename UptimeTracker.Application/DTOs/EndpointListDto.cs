@@ -14,5 +14,6 @@ namespace UptimeTracker.Application.DTOs
 		public int CheckIntervalInMinutes { get; set; }
 		public string Status { get; set; } = string.Empty;
 		public bool IsActive { get; set; }
+		public DateTime? LastCheckedAt { get; set; }
 	}
 }
