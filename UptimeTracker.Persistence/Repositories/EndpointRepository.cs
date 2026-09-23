@@ -43,5 +43,10 @@ namespace UptimeTracker.Persistence.Repositories
 		{
 			return await _context.Endpoints.FindAsync(id);
 		}
+
+		public void Remove(Endpoint endpoint)
+		{
+			_context.Endpoints.Remove(endpoint);
+		}
 	}
 }

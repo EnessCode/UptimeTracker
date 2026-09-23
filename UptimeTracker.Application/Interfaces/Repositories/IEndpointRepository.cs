@@ -14,5 +14,6 @@ namespace UptimeTracker.Application.Interfaces.Repositories
 		Task<IEnumerable<Endpoint>> GetAllAsync();
 		void Update(Endpoint endpoint);
 		Task<Endpoint> GetByIdAsync(Guid id);
+		void Remove(Endpoint endpoint);
 	}
 }

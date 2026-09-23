@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UptimeTracker.Application.Features.Endpoints.Commands.CreateEndpoint;
+using UptimeTracker.Application.Features.Endpoints.Commands.DeleteEndpoint;
 using UptimeTracker.Application.Features.Endpoints.Queries.GetAllEndpoints;
 
 namespace UptimeTracker.WebApi.Controllers
@@ -34,6 +35,13 @@ namespace UptimeTracker.WebApi.Controllers
 		{
 			var endpoints = await _mediator.Send(new GetAllEndpointsQuery());
 			return Ok(endpoints);
+		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+			await _mediator.Send(new DeleteEndpointCommand { Id = id });
+			return NoContent(); 
 		}
 	}
 }
