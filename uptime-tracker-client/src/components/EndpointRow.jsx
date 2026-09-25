@@ -2,8 +2,15 @@ import { endpointService } from '../services/endpointService';
 
 const EndpointRow = ({ endpoint, onShowHistory, onDelete }) => {
     const getStatusBadgeClass = (status) => {
-        if (status === 'Online') return 'status-pulse-success badge rounded-pill px-3 py-2';
-        if (status === 'Offline') return 'status-pulse-danger badge rounded-pill px-3 py-2';
+        if (!status) return 'badge bg-secondary text-white rounded-pill px-3 py-2';
+
+        const s = status.toString().toLowerCase();
+
+        if (s === 'online' || s === '1')
+            return 'status-pulse-success bg-success badge text-white rounded-pill px-3 py-2';
+        if (s === 'offline' || s === '2')
+            return 'status-pulse-danger bg-danger badge text-white rounded-pill px-3 py-2';
+
         return 'badge bg-warning text-dark rounded-pill px-3 py-2';
     };
 
